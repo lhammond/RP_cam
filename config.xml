@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns     = "http://www.w3.org/ns/widgets" xmlns:gap = "http://phonegap.com/ns/1.0"
+        id = "com.bucksbillpay.mobile"
+        version   = "2.0.0">
+
+    <name>DoubleNet Pay</name>
+
+    <description>
+        Cash Bill Pay
+    </description>
+
+    <author href="http://2owls.com" email="2owls@gmail.com">
+        2Owls
+	</author>
+
+    <access origin="*"/>
+        
+    <!-- ICONS -->
+        
+    <icon src="assets/img/device_icons/Icon.png" /> <!-- default 72 pixels -->
+
+<!--
+Icon-72.png:          PNG image data, 72 x 72, 8-bit/color RGBA, non-interlaced
+Icon-72@2x.png:       PNG image data, 144 x 144, 8-bit/color RGBA, non-interlaced
+Icon-Small-50.png:    PNG image data, 50 x 50, 8-bit/color RGBA, non-interlaced
+Icon-Small-50@2x.png: PNG image data, 100 x 100, 8-bit/color RGBA, non-interlaced
+Icon-Small.png:       PNG image data, 29 x 29, 8-bit/color RGBA, non-interlaced
+Icon-Small@2x.png:    PNG image data, 58 x 58, 8-bit/color RGBA, non-interlaced
+Icon.png:             PNG image data, 57 x 57, 8-bit/color RGBA, non-interlaced
+Icon@2x.png:          PNG image data, 114 x 114, 8-bit/color RGBA, non-interlaced
+iTunesArtwork.png:    PNG image data, 512 x 512, 8-bit/color RGBA, non-interlaced
+iTunesArtwork@2x.png: PNG image data, 1024 x 1024, 8-bit/color RGBA, non-interlaced
+-->
+ 
+    <icon src="assets/img/device_icons/ios/Icon.png" gap:platform="ios" width="57" height="57" /> <!-- iPhone 3G, 3GS, iPod Touch 2G, 3G -->
+    <icon src="assets/img/device_icons/ios/Icon-72.png" gap:platform="ios" width="72" height="72" /> <!-- iPad 1, 2, iPad mini -->
+    <icon src="assets/img/device_icons/ios/Icon@2x.png" gap:platform="ios" width="114" height="114" /> <!-- iPhone 4, 4S, iPod Touch 4G -->
+    <icon src="assets/img/device_icons/ios/Icon-72@2x.png" gap:platform="ios" width="144" height="144" /> <!-- iPad 3, 4 -->
+
+    <!-- <icon src="assets/img/device_icons/android/ldpi.png" gap:platform="android" gap:density="ldpi" />  36 pixels -->
+    <!-- <icon src="assets/img/device_icons/android/mdpi.png" gap:platform="android" gap:density="mdpi" />  48 pixels -->
+    <!-- <icon src="assets/img/device_icons/android/hdpi.png" gap:platform="android" gap:density="hdpi" />  72 pixels -->
+    <!-- <icon src="assets/img/device_icons/android/xhdpi.png" gap:platform="android" gap:density="xhdpi" />  96 pixels -->
+        
+    <!-- <icon src="assets/img/device_icons/bb/icon.png" gap:platform="blackberry" /> 72 pixels -->
+    <!-- <icon src="assets/img/device_icons/bb/icon_hover.png" gap:platform="blackberry" gap:state="hover"/> 72 pixels -->
+        
+    <!-- <icon src="assets/img/device_icons/winphone/icon.png" gap:platform="winphone" /> 57 pixels -->
+    <!-- <icon src="assets/img/device_icons/winphone/tileicon.png" gap:platform="winphone" gap:role="background" /> 72 pixels -->
+        
+    <!-- <icon src="assets/img/device_icons/webos/icon.png" gap:platform="webos" /> 29 pixels -->
+    <!-- <icon src="assets/img/device_icons/webos/miniicon.png" gap:platform="webos" gap:role="mini" /> 15 pixels -->
+        
+    <!-- SPLASH SCREENS -->
+        
+    <gap:splash src="assets/img/splash/ios/Default~iphone.png" /> <!-- default 320x480 pixels -->
+<!--
+Default-568h@2x~iphone.png:    PNG image data, 640 x 1136, 8-bit/color RGB, non-interlaced
+Default-Landscape@2x~ipad.png: PNG image data, 2048 x 1496, 8-bit/color RGB, non-interlaced
+Default-Landscape~ipad.png:    PNG image data, 1024 x 748, 8-bit/color RGB, non-interlaced
+Default-Portrait@2x~ipad.png:  PNG image data, 1536 x 2008, 8-bit/color RGB, non-interlaced
+Default-Portrait~ipad.png:     PNG image data, 768 x 1004, 8-bit/color RGB, non-interlaced
+Default@2x~iphone.png:         PNG image data, 640 x 960, 8-bit/color RGB, non-interlaced
+Default~iphone.png:            PNG image data, 320 x 480, 8-bit/color RGB, non-interlaced
+-->        
+    <gap:splash src="assets/img/splash/ios/Default~iphone.png" gap:platform="ios" width="320" height="480" /> <!-- iPhone 3G, 3GS, iPod Touch 2, 3 -->
+    <gap:splash src="assets/img/splash/ios/Default@2x~iphone.png" gap:platform="ios" width="640" height="960" /> <!-- iPhone 4, 4S, iPod Touch 4 -->
+    <gap:splash src="assets/img/splash/ios/Default-568h@2x~iphone.png" gap:platform="ios" width="640" height="1136" /> <!-- iPhone 5, iPod Touch 5 -->
+    <gap:splash src="assets/img/splash/ios/Default-Landscape~ipad.png" gap:platform="ios" width="1024" height="768" /> <!-- iPad 1, 2, iPad mini -->
+    <gap:splash src="assets/img/splash/ios/Default-Portrait~ipad.png" gap:platform="ios" width="768" height="1024" /> <!-- iPad 1, 2, iPad mini -->
+    <gap:splash src="assets/img/splash/ios/Default-Landscape@2x~ipad.png" gap:platform="ios" width="2048" height="1496" /> <!-- iPad 3, 4 -->
+    <gap:splash src="assets/img/splash/ios/Default-Portrait@2x~ipad.png" gap:platform="ios" width="1536" height="2008" /> <!-- iPad 3, 4 -->
+        
+    <!-- <gap:splash src="assets/img/splash/android/ldpi.png" gap:platform="android" gap:density="ldpi" /> 200x320 -->
+    <!-- <gap:splash src="assets/img/splash/android/mdpi.png" gap:platform="android" gap:density="mdpi" /> 320x480 -->
+    <!-- <gap:splash src="assets/img/splash/android/hdpi.png" gap:platform="android" gap:density="hdpi" /> 480x800 -->
+    <!-- <gap:splash src="assets/img/splash/android/xhdpi.png" gap:platform="android" gap:density="xhdpi" /> 720x1280 -->
+
+    <!-- <gap:splash src="assets/img/splash/bb/splash.png" gap:platform="blackberry" /> BlackBerry 250x250 -->
+        
+    <!-- <gap:splash src="assets/img/splash/winphone/splash.jpg" gap:platform="winphone" /> Windows Phone 7 480x800 -->
+        
+    <!-- <gap:splash src="assets/img/splash/webos/splash.png" gap:platform="webos" /> WebOS 64x64 -->
+
+
+    <!-- GENERAL PREFERENCES -->
+        
+    <preference name="phonegap-version" value="3.0.0" />
+    <preference name="orientation" value="default" />
+    <preference name="target-device" value="universal" />
+    <preference name="fullscreen" value="true" /> <!-- remove the upper bar on iOS and Android -->
+        
+           <!-- Preferences for iOS -->
+    <preference name="AllowInlineMediaPlayback" value="false" />
+    <preference name="AutoHideSplashScreen" value="true" />
+    <preference name="BackupWebStorage" value="cloud" />
+    <preference name="DisallowOverscroll" value="false" />
+    <preference name="EnableViewportScale" value="false" />
+    <preference name="FadeSplashScreen" value="true" />
+    <preference name="FadeSplashScreenDuration" value=".25" />
+    <preference name="HideKeyboardFormAccessoryBar" value="false" />
+    <preference name="KeyboardDisplayRequiresUserAction" value="true" />
+    <preference name="KeyboardShrinksView" value="false" />
+    <preference name="MediaPlaybackRequiresUserAction" value="false" />
+    <preference name="ShowSplashScreenSpinner" value="true" />
+    <preference name="SuppressesIncrementalRendering" value="false" />
+    <preference name="TopActivityIndicator" value="gray" />
+
+    <feature name="LocalStorage">
+        <param name="ios-package" value="CDVLocalStorage"/>
+    </feature>
+ 
+    <!-- ANDROID PREFERENCES -->
+        
+    <preference name="android-minSdkVersion" value="7" /> <!-- minimum Android 2.1 -->
+    <!-- <preference name="android-maxSdkVersion" value="17" /> maximum Android 4.2 -->
+    <preference name="android-installLocation" value="auto" />
+    <preference name="splash-screen-duration" value="3000" />
+    <preference name="load-url-timeout" value="20000" />
+        
+    <!-- BLACKBERRY PREFERENCES -->
+        
+    <preference name="disable-cursor" value="false" />
+        
+    <!-- PHONEGAP API FEATURES PREFERENCES -->
+        
+    <preference name="permissions" value="none"/>
+
+</widget>

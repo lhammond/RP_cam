@@ -1,0 +1,16 @@
+#check_search.ui-page div.ui-datebox-container span div.ui-datebox-controls a.ui-btn span.ui-btn-inner span.ui-icon
+{
+  display:none !important;
+}
+
+div.ui-datebox-container span div.ui-datebox-controls
+{
+  margin-left:15px !important;
+  margin-right:15px !important;
+}
+.ui-datebox-flipcontent {
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
+}
+.ui-datebox-flipcontent div {
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.6);
+}

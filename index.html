@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+
+    <!--
+
+    -->
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.css" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.6.4/leaflet.min.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/checkme.css" />
+    <link rel="stylesheet" href="assets/css/datebox-overrides.css" />
+    <link rel="stylesheet" href="assets/css/util.css" />
+    <link rel="stylesheet" type="text/css" href="js/3rd/datebox/jqm-datebox.min.css" />
+    <link rel="apple-touch-icon-precomposed" href="assets/img/apple_touch_icon.png" />
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js"></script>
+    <!--
+
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+
+
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.0-beta.1/jquery.mobile-1.4.0-beta.1.min.css">
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.0-beta.1/jquery.mobile-1.4.0-beta.1.min.js"></script>
+
+-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.6.4/leaflet.js"></script>
+    <script src="js/3rd/jquery.tmpl.min.js"></script>
+    <script src="js/3rd/jquery.cookie.js"></script>
+    <script src="js/3rd/date.js"></script>
+    <script src="js/3rd/iscroll-lite.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/map.js"></script>
+
+    <script type="text/javascript" src="js/3rd/datebox/jqm-datebox.core.min.js"></script>
+    <script type="text/javascript" src="js/3rd/datebox/jqm-datebox.mode.calbox.min.js"></script>
+    <script type="text/javascript" src="js/3rd/datebox/jqm-datebox.mode.datebox.min.js"></script>
+    <script type="text/javascript" src="js/3rd/datebox/jqm-datebox.mode.flipbox.min.js"></script>
+    <script type="text/javascript" src="js/3rd/datebox/jquery.mobile.datebox.i18n.en_US.utf8.js"></script>
+
+    <script>
+        var sessionData,myScroll;
+        //document.domain = "DoubleNetPaybillpay.com";
+        var cfg = {
+            apiId2:"das987dlaDPON32",
+            apiId:"O5342g2A72hcwc2",
+            email:"lappin.hammond@gmail.com",
+            password:"test",
+            email2:"john.doe@gmail.com",
+            password2:"password123"
+        }
+        var api = new BucksBillPay(cfg);
+        var locations,checks;
+
+        viewIcons = {
+            "Bills":"ui-icon ui-icon-screenshot",
+            "sales":"ui-icon ui-icon-money",
+            "sales_by_category":"ui-icon ui-icon-money",
+            "sales_by_item":"ui-icon ui-icon-money",
+            "employee_performance":"ui-icon ui-icon-group",
+            "payment_methods":"ui-icon ui-icon-credit-card",
+            "check_search":"ui-icon ui-icon-fasearch",
+            "settings":"ui-icon ui-icon-cog",
+            "help":"ui-icon ui-icon-question-sign",
+            "legal":"ui-icon ui-icon-legal"
+        };
+        var map;
+        map = new fmap(cfg);
+    </script>
+</head>
+<body>
+
+<!-- login -->
+<div id="login" data-role="page" data-theme="b">
+
+    <!-- header -->
+    <div data-role="header" style="background-color:#0496e1;background-image:none;">
+        <h1 class="logo no-nav"><img src="assets/img/logo.png" alt="DoubleNetPay"></h1>
+    </div>
+    <!-- /header -->
+
+    <!-- content -->
+    <div id="signIn" data-role="content" class="m15">
+            <label for="email" class="hidden" >Email:</label>
+            <input id="email" type="email" name="email" autocomplete="off" placeholder="Email" data-theme="d" value="john.doe@gmail.com">
+
+            <label for="password" class="hidden">Password:</label>
+            <input id="password" type="password" name="password" autocomplete="off" placeholder="Password" data-theme="d" value="password123">
+        <div class="ui-grid-a">
+            <div class="ui-block-a">
+                <div data-role="fieldcontain" style="">
+                    <label for="slider">Remember Email:</label>
+                    <select id="slider" name="slider" data-role="slider"  data-track-theme="e" data-theme="e" onchange="setRememberMe($(this).val());return false;">
+                        <option value="no">Off</option>
+                        <option value="yes">On</option>
+                    </select>
+                    <br/>
+                </div>
+            </div>
+            <div class="ui-block-b tar">
+                <a onclick="signin();return false;" value="Sign In" data-theme="a" data-role="button">Sign In</a>
+
+                <div class="mr10">
+                <a href="#signin-help" class="" style="font-size:15px;font-weight:400">Reset Password ></a>
+                </div>
+            </div>
+        </div><!-- /grid-a -->
+    </div>
+    <!-- /content -->
+
+    <!--
+    <div data-role="footer" id="footer" data-position="fixed">
+        <div data-role="navbar" id="navbar">
+        </div>
+    </div>
+     /footer -->
+</div>
+<!-- // login -->
+
+<!-- sign in help -->
+<div id="signin-help" data-role="page" data-theme="b">
+
+    <!-- header -->
+    <div data-role="header">
+        <h1 class="logo no-nav"><img src="assets/img/logo.png" alt="DoubleNetPay"></h1>
+    </div>
+    <!-- /header -->
+
+    <!-- content -->
+    <div id="" data-role="content" class="m15">
+        <div id="resetPassForm" class="tac">
+            <h3>Enter your email address and we will send you a new password.</h3>
+            <br/>
+            <input id="resetPassEmail">
+            <a id="sendPassBtn" data-theme="a" data-role="button">Send Password</a>
+            <div class="tal">
+                <div class="ml10">
+                    <a href="index.html" class="" style="font-size:15px;font-weight:400">< Back</a>
+                </div>
+            </div>
+        </div>
+        <div id="resetPassConfirmation" class="hid">
+            <h3 style="font-weight:400;font-size:16px;text-align:center;">We've just sent you an email with a new password.</h3>
+            <br/>
+            <br/>
+            <a href="index.html" value="Sign In" data-theme="a" data-role="button">Return To Sign In</a>
+        </div>
+        <script>
+            $("#resetPassEmail").val("");
+            $("#sendPassBtn").button().unbind("click").click(function(){
+                if($("#resetPassEmail").val()=="")
+                    return false;
+
+                var cb = function(){
+                    $("#resetPassEmail").val("");
+                    $("#resetPassForm").hide();
+                    $("#resetPassConfirmation").show();
+                };
+                api.User.resetPassword(cb,{email:$("#resetPassEmail").val()});
+            });
+        </script>
+    </div>
+    <!-- // content -->
+</div>
+<!-- // sign in help -->
+
+<!-- reset pass -->
+<div id="resetPass" data-role="page" data-theme="b">
+    <!-- header -->
+    <div data-role="header">
+        <h1 class="logo no-nav"><img src="/assets/img/logo.png" alt="DoubleNetPay Bill Pay"></h1>
+    </div>
+    <!-- /header -->
+    <!-- content -->
+    <div data-role="content">
+        <div class="tac">
+            <h4>Please Reset Your Password</h4>
+            <div for="resetPass1" class="label tal">NEW PASSWORD</div>
+            <input id="resetPassUserId" type="hidden"/>
+            <input id="resetPass1" type="password">
+            <div for="resetPass2" class="label tal">REPEAT PASSWORD</div>
+            <input id="resetPass2" type="password">
+            <a id="updatePassBtn" data-theme="a" data-role="button">Reset Password</a>
+        </div>
+    </div>
+    <!-- // content -->
+</div>
+<!-- // reset pass -->
+
+<!-- home -->
+<div id="home" data-role="page" data-theme="a" data-title="DoubleNetPay Bill Pay">
+    <!-- header -->
+    <div data-role="header" data-position="fixed" data-theme="b">
+        <h1><span class="ui-icon ui-icon-fahome">&nbsp;</span><span>Home</span></h1>
+        <a href="#nav"  data-iconshadow="false" class="ui-icon-nodisc sprite navmenu-link" data-icon="bars" data-iconpos="notext">Navigation</a>
+    </div>
+    <!-- /header -->
+
+    <!-- /panel -->
+    <div id="nav" class="nav-panel" data-role="panel" data-position-fixed="false" data-display="push" data-theme="c">
+        <a onclick="signout();return false;" data-role="button" data-inline="true" data-theme="a" class="sign-out">Sign Out</a>
+        <ul data-role="listview" data-theme="c" data-divider-theme="d" data-icon="true" class="clear" data-iconpos="left">
+            <li data-icon="fahome" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" onclickFoo="showLoc(null,'Bills');return false;" href="#home">Home</a></li>
+            <li data-icon="file-alt" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" onclickFoo="showLoc(null,'Bills');return false;" href="#pending_bills">Bills</a></li>
+            <!--
+            <li data-icon="fastar" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" href="#offers" onclickFoo="showLoc(null,'employee_performance');return false;">Offers</a></li>
+            <li data-icon="credit-card" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" onclickFoo="showLoc(null,'payment_methods');return false;" href="#credit_guard">Credit Guard</a></li>
+            -->
+            <li data-icon="map-marker" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" href="#locations">Locations</a></li>
+            <li data-icon="fasearch" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" href="#paid_bills">Paid Bills</a></li>
+            <!--
+            <li data-icon="legal"  class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" hrefFoo="#legal">Legal</a></li>
+            -->
+        </ul>
+    </div>
+    <!-- /panel -->
+
+    <!-- content -->
+    <div data-role="content m0">
+<!--
+      <a href="#bills">
+        <div class="bubble ui-corner-all">
+            <div class="ui-corner-all">
+                Bills
+            </div>
+            <div>
+                <span>$129.48</span>
+                <img src="assets/img/checkme/bills.png">
+            </div>
+        </div>
+      </a>
+      <a href="#offers">
+        <div class="bubble ui-corner-all">
+            <div class="ui-corner-all">
+                Offers
+            </div>
+            <div>
+                <span>16 new offers!</span>
+                <img src="assets/img/checkme/offers.png">
+            </div>
+        </div>
+      </a>
+      <a href="#credit_guard">
+        <div class="bubble ui-corner-all">
+            <div class="ui-corner-all">
+                Credit Guard
+            </div>
+            <div>
+                <span>Your Credit Score is 680</span>
+                <img src="assets/img/checkme/credit_score.png">
+            </div>
+        </div>
+      </a>
+-->
+
+
+        <div class="ui-grid-a">
+            <div class="ui-block-a">
+                <a href="#pending_bills">
+                <div class="bubble ui-corner-all">
+                    <div class="ui-corner-all">
+
+                    </div>
+                    <div>
+                        <span style="color:#c7da8b">3 pending bills</span>
+                        <img src="assets/img/checkme/bills.png">
+                    </div>
+                </div>
+                </a>
+            </div>
+            <div class="ui-block-b">
+                <a href="#pending_bills">
+                    <div class="bubble ui-corner-all">
+                        <div class="ui-corner-all">
+
+                        </div>
+                        <div>
+                            <span>Add New Biller</span>
+                            <span class="icon ui-icon ui-icon-plus-sign" style="">&nbsp;</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+
+                <div class="clr"></div>
+
+
+                <div class="ui-grid-a">
+                    <div class="ui-block-a">
+                        <div class="bubble ui-corner-all">
+                            <div class="ui-corner-all">
+
+                            </div>
+                            <div>
+                                <span style="padding-top:5px;">Approved<br/>Bills to be Paid</span>
+                                <span class="icon ui-icon ui-icon-ok-sign" style="">&nbsp;</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-block-b">
+                        <div class="bubble ui-corner-all">
+                            <div class="ui-corner-all">
+
+                            </div>
+                            <div>
+                                <span style="padding-top:5px;">Paid<br/>Bill History</span>
+                                <span class="icon ui-icon ui-icon-calendar" style="">&nbsp;</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+        <div class="clr"></div>
+
+
+        <div class="ui-grid-a">
+            <div class="ui-block-a">
+                <div class="bubble ui-corner-all">
+                    <div class="ui-corner-all">
+
+                    </div>
+                    <div>
+                        <span>Pay Stubs</span>
+                        <span class="icon ui-icon ui-icon-file" style="">&nbsp;</span>
+                    </div>
+                </div>
+            </div>
+            <div class="ui-block-b">
+                <div class="bubble ui-corner-all">
+                    <div class="ui-corner-all">
+
+                    </div>
+                    <div>
+                        <span>Settings</span>
+                        <span class="icon ui-icon ui-icon-cog" style="">&nbsp;</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="clr"></div>
+
+
+        <div class="ui-grid-a">
+            <div class="ui-block-a">
+                <div class="bubble ui-corner-all">
+                    <div class="ui-corner-all">
+
+                    </div>
+                    <div>
+                        <span>Live Support</span>
+                        <span class="icon ui-icon ui-icon-comment" style="">&nbsp;</span>
+                    </div>
+                </div>
+            </div>
+            <div class="ui-block-b">
+                <a onclick="signout();return false;">
+                <div class="bubble ui-corner-all">
+                    <div class="ui-corner-all">
+                    </div>
+                    <div>
+                        <span>Sign Out</span>
+                        <span class="icon ui-icon ui-icon-off" style="">&nbsp;</span>
+                    </div>
+                </div>
+                </a>
+            </div>
+        </div>
+
+    </div>
+    <!-- // content -->
+</div>
+<!-- // home -->
+
+
+<!-- bills -->
+<div id="pending_bills" data-role="page" data-theme="b" class="ui-page ui-body-b" style="padding-top:37px !important;" data-title="Bills">
+
+    <!-- /panel -->
+    <div id="nav1" class="nav-panel" data-role="panel" data-position-fixed="false" data-display="push" data-theme="c">
+        <a onclick="signout();return false;" data-role="button" data-inline="true" data-theme="a" class="sign-out">Sign Out</a>
+        <ul data-role="listview" data-theme="c" data-divider-theme="d" data-icon="true" class="clear" data-iconpos="left">
+            <li data-icon="fahome" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" onclickFoo="showLoc(null,'Bills');return false;" href="#pending_bills">Pending Bills</a></li>
+            <li data-icon="fasearch" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" onclickFoo="showLoc(null,'Bills');return false;" href="#paid_bills">Paid Bill History</a></li>
+            <li data-icon="file-alt" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" onclickFoo="showLoc(null,'Bills');return false;" href="#pay_stubs">Pay Stubs</a></li>
+            <li data-icon="cog" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" onclickFoo="showLoc(null,'Bills');return false;">Settings</a></li>
+            <li data-icon="question-sign" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" onclickFoo="showLoc(null,'Bills');return false;">Help</a></li>
+        </ul>
+    </div>
+    <!-- /panel -->
+
+    <!-- header -->
+    <div data-role="header" data-position="fixed" data-theme="b">
+        <h1><span class="ui-icon ui-icon-money">&nbsp;</span><span>Pending Bills</span></h1>
+        <a href="#nav1" data-iconshadow="false" class="ui-icon-nodisc sprite navmenu-link" data-icon="bars" data-iconpos="notext">Navigation</a>
+        <a href="#home" class="backBtn" data-role="button" data-icon="arrow-l" data-iconpos="notext" data-mini="true" data-inline="true">back</a>
+    </div>
+    <!-- /header -->
+
+    <!-- content -->
+    <div data-role="content">
+        <div class="greybg pt5" style="color:#FAFAFA;text-shadow:none;padding:5px;">
+            <div class="ml15 left mt5">
+                Total
+            </div>
+            <div class="right mr15 mt5">
+                $185.29
+            </div>
+            <div class="clr"></div>
+        </div>
+        <div class="clr"></div>
+        <div class="m15">
+            <a href="#confirmation" data-role="button" data-theme="a">Pay Selected Bills</a>
+        </div>
+        <div class="clr h20"></div>
+        <ul data-role="listview" data-split-icon="gear" data-filter="false" data-inset="false">
+            <li>
+              <a href="#" style="padding-top: 0px;padding-bottom: 0px;padding-right: 0px;padding-left: 0px;">
+                <label style="border-top-width: 0px;margin-top: 0px;border-bottom-width: 0px;margin-bottom: 0px;border-left-width: 0px;border-right-width: 0px;" data-corners="false">
+                    <fieldset data-role="controlgroup" >
+                        <input type="checkbox" name="checkbox-1b" id="checkbox-1b" />
+                        <label for="checkbox-1b" style="border-top-width: 0px;margin-top: 0px;border-bottom-width: 0px;margin-bottom: 0px;border-left-width: 0px;border-right-width: 0px;">
+                            <label  style="padding:10px 0px 0px 10px;">
+                                <h3>Georgia Power<span style="font-size:10px;">  (...01245)</span></h3>
+                                <p>Balance: $50.05</p>
+                                <div class="left" style="font-size:10px;color:#FFBD90">
+                                    Due Wednesday October 20
+                                </div>
+                            </label>
+                        </label>
+                    </fieldset>
+                </label>
+              </a>
+            </li>
+            <li><a href="#" style="padding-top: 0px;padding-bottom: 0px;padding-right: 0px;padding-left: 0px;">
+                <label style="border-top-width: 0px;margin-top: 0px;border-bottom-width: 0px;margin-bottom: 0px;border-left-width: 0px;border-right-width: 0px;" data-corners="false">
+                    <fieldset data-role="controlgroup" >
+                        <input type="checkbox" name="checkbox-2b" id="checkbox-2b" />
+                        <label for="checkbox-2b" style="border-top-width: 0px;margin-top: 0px;border-bottom-width: 0px;margin-bottom: 0px;border-left-width: 0px;border-right-width: 0px;">
+                            <label  style="padding:10px 0px 0px 10px;">
+                                <h3>Verizon Wireless<span style="font-size:10px;">  (...67890)</span></h3>
+                                <p>Balance: $45.13</p>
+                                <div class="left" style="font-size:10px;color:#FFBD90">
+                                    Due Friday October 22
+                                </div>
+                            </label>
+                        </label>
+                    </fieldset>
+                </label>
+            </a>
+            </li>
+            <li>
+              <a href="#" style="padding-top: 0px;padding-bottom: 0px;padding-right: 0px;padding-left: 0px;">
+                <label style="border-top-width: 0px;margin-top: 0px;border-bottom-width: 0px;margin-bottom: 0px;border-left-width: 0px;border-right-width: 0px;" data-corners="false">
+                    <fieldset data-role="controlgroup" >
+                        <input type="checkbox" name="checkbox-3b" id="checkbox-3b" />
+                        <label for="checkbox-3b" style="border-top-width: 0px;margin-top: 0px;border-bottom-width: 0px;margin-bottom: 0px;border-left-width: 0px;border-right-width: 0px;">
+                            <label  style="padding:10px 0px 0px 10px;">
+                                <h3>Comcast Cable<span style="font-size:10px;">  (...85965)</span></h3>
+                                <p>Balance: $80.12</p>
+                                <div class="left" style="font-size:10px;color:#FFBD90">
+                                    Due Friday October 22
+                                </div>
+                            </label>
+                        </label>
+                    </fieldset>
+                </label>
+              </a>
+            </li>
+            <li>
+                <a href="#" style="padding-top: 0px;padding-bottom: 0px;padding-right: 0px;padding-left: 0px;">
+                    <label style="border-top-width: 0px;margin-top: 0px;border-bottom-width: 0px;margin-bottom: 0px;border-left-width: 0px;border-right-width: 0px;" data-corners="false">
+                        <fieldset data-role="controlgroup" >
+                            <input type="checkbox" name="checkbox-4b" id="checkbox-4b" />
+                            <label for="checkbox-4b" style="border-top-width: 0px;margin-top: 0px;border-bottom-width: 0px;margin-bottom: 0px;border-left-width: 0px;border-right-width: 0px;">
+                                <label  style="padding:10px 0px 0px 10px;">
+                                    <h3>DoubleNet Pay<span style="font-size:10px;">  (392312)</span></h3>
+                                    <p>Balance: $9.99</p>
+                                    <div class="left" style="font-size:10px;color:#FFBD90">
+                                        Due Monday October 25
+                                    </div>
+                                </label>
+                            </label>
+                        </fieldset>
+                    </label>
+                </a>
+            </li>
+        </ul>
+        <div class="clr"></div>
+    </div>
+    <!-- // content -->
+  </div>
+<!-- // bills -->
+
+<!-- barcode -->
+<div id="barcode" data-role="page" data-theme="b" data-title="DoubleNetPay Bill Pay">
+    <!-- /panel -->
+    <div id="nav8" class="nav-panel" data-role="panel" data-position-fixed="false" data-display="push" data-theme="c">
+        <a onclick="signout();return false;" data-role="button" data-inline="true" data-theme="a" class="sign-out">Sign Out</a>
+        <ul data-role="listview" data-theme="c" data-divider-theme="d" data-icon="true" class="clear" data-iconpos="left">
+            <li data-icon="fahome" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" onclickFoo="showLoc(null,'Bills');return false;" href="#home">Home</a></li>
+            <li data-icon="file-alt" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" onclickFoo="showLoc(null,'Bills');return false;" href="#bills">Bills</a></li>
+            <!--
+            <li data-icon="fastar" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" href="#offers" onclickFoo="showLoc(null,'employee_performance');return false;">Offers</a></li>
+            <li data-icon="credit-card" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" onclickFoo="showLoc(null,'payment_methods');return false;" href="#credit_guard">Credit Guard</a></li>
+            -->
+            <li data-icon="map-marker" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" href="#locations">Locations</a></li>
+            <li data-icon="fasearch" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" href="#paid_bills">Paid Bills</a></li>
+            <!--
+            <li data-icon="legal"  class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" hrefFoo="#legal">Legal</a></li>
+            -->
+        </ul>
+    </div>
+    <!-- /panel -->
+
+    <!-- header -->
+    <div data-role="header" data-position="fixed" data-theme="b">
+        <h1><span class="ui-icon ui-icon-money">&nbsp;</span><span>Bills</span></h1>
+        <a href="#nav8"  data-iconshadow="false" class="ui-icon-nodisc sprite navmenu-link" data-icon="bars" data-iconpos="notext">Navigation</a>
+        <a class="backBtn" href="#home" data-role="button" data-icon="arrow-l" data-iconpos="notext" data-mini="true" data-inline="true">back</a>
+    </div>
+    <!-- /header -->
+
+    <!-- content -->
+    <div class="greybg hid" style="color:#FAFAFA;text-shadow:none;padding:5px;">
+        <div class="ml15 left "><span style="color:#aaaaaa;">Total</span></div>
+        <div class="right mr15 ">$185.29</div>
+        <div class="clr"></div>
+    </div>
+    <div class="tac greybg" style="background-color:#333333;color:#ffffff;text-shadow:none;font-size:11px;">
+        show this screen to the cashier to finish paying your bills
+    </div>
+    <div data-role="content" class="m15" style="margin-top:0px;">
+        <div class="hid tac">
+            <span class="blue fwb">To complete your payment,</span>
+        </div>
+        <div class="tac hid">
+            Please present this screen and instructions to the cashier to complete payment of your bill(s).
+        </div>
+        <div class="tac" style="margin-bottom:-5px;padding:0px;margin-top:10px;">
+            <span class="blue fwb" style="display:inline-block;margin-bottom:0px;text-align:center;">Cashier Instructions</span>
+        </div>
+        <br/>
+        <span class="fwb">1</span>&nbsp;&nbsp;&nbsp;Enter total amount of $130.17
+        <br/>
+        <span class="fwb">2</span>&nbsp;&nbsp;&nbsp;Select the <b>"Load"</b> button on your POS
+        <br/>
+        <span class="fwb">3</span>&nbsp;&nbsp;&nbsp;Scan the QR code below
+        <div class="tac mt10"><img src="assets/img/qrcode.jpg" style="width:100px;"></div>
+        <span class="fwb">4</span>&nbsp;&nbsp;&nbsp;Get cash payment from the customer
+        <br/>
+        <span class="fwb">5</span>&nbsp;&nbsp;&nbsp;Give the customer the receipt
+        <div class=""><a href="#confirmation" data-role="button" data-theme="a">Get Confirmation</a></div>
+        <div class="tac">
+            <span class="blue">Have Questions?</span>
+            <br/>
+            Call 1-800-HLP-DoubleNetPay
+            <br/>
+            <span style="font-size:10px;">*Payment is non-refundable.</span>
+        </div>
+    </div>
+    <!-- // content -->
+</div>
+<!-- // barcode -->
+
+<!-- confirmation -->
+<div id="confirmation" data-role="page" data-theme="b" data-title="DoubleNetPay Bill Pay">
+    <!-- /panel -->
+    <div id="nav9" class="nav-panel" data-role="panel" data-position-fixed="false" data-display="push" data-theme="c">
+        <a onclick="signout();return false;" data-role="button" data-inline="true" data-theme="a" class="sign-out">Sign Out</a>
+        <ul data-role="listview" data-theme="c" data-divider-theme="d" data-icon="true" class="clear" data-iconpos="left">
+            <li data-icon="fahome" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" onclickFoo="showLoc(null,'Bills');return false;" href="#home">Pending Bills</a></li>
+            <li data-icon="fasearch" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" onclickFoo="showLoc(null,'Bills');return false;" href="#paid_bills">Paid Bill History</a></li>
+            <li data-icon="file-alt" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" onclickFoo="showLoc(null,'Bills');return false;" href="#pay_stubs">Pay Stubs</a></li>
+            <li data-icon="cog" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" onclickFoo="showLoc(null,'Bills');return false;">Settings</a></li>
+            <li data-icon="question-sign" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" onclickFoo="showLoc(null,'Bills');return false;">Help</a></li>
+        </ul>
+    </div>
+    <!-- /panel -->
+    <!-- header -->
+     <div data-role="header" data-position="fixed" data-theme="b">
+        <h1><span class="ui-icon ui-icon-money">&nbsp;</span><span>Bills</span></h1>
+        <a href="#nav9"  data-iconshadow="false" class="ui-icon-nodisc sprite navmenu-link" data-icon="bars" data-iconpos="notext">Navigation</a>
+        <a class="backBtn" href="#home" data-role="button" data-icon="arrow-l" data-iconpos="notext" data-mini="true" data-inline="true">back</a>
+    </div>
+    <!-- /header -->
+
+    <div class="greybg pt5" style="background: #50BF6A;color:#FAFAFA;text-shadow:none;padding:5px;">
+        <div class="ml15 left mt5">
+            Total
+        </div>
+        <div class="right mr15 mt5">
+            $185.29
+        </div>
+        <div class="clr"></div>
+    </div>
+    <div data-role="content" class="tac">
+        <h2>Congratulations!</h2>
+        <p>
+            The following bill(s) have been paid with DoubleNet Pay&trade; Bill Pay:
+        </p>
+    </div>
+    <div class="m15" data-role="content" data-inset="true" data-shadow="true">
+        <table data-inset="true" class="billTbl" cellpadding="0" cellspacing="0">
+            <tr>
+                <td colspan="100%" data-theme="a" style="text-indent:5px;">
+                    <div style="background: #50BF6A;color:#ffffff;text-shadow:none;">
+                        <div class="left">
+                            <h3>Georgia Power<span style="font-size:10px;">  (...01245)</span></h3>
+                        </div>
+                        <div class="right mr15">
+                            <h3>PAID</h3>
+                        </div>
+                        <div class="clr"></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="tal">Amount Paid</td>
+                <td class="tar" style="border-right:1px solid #fff;">$50.05</td>
+            </tr>
+            <tr>
+                <td class="tal">Date Paid</td>
+                <td class="tar" style="border-right:1px solid #fff;">Oct 7, 2013</td>
+            </tr>
+            <tr>
+                <td class="tal" >Confirmation #</td>
+                <td class="tar" style="border-right:1px solid #fff;">Z12345A34567B</td>
+            </tr>
+        </table>
+        <br/><br/>
+        <table data-inset="true" class="billTbl" cellpadding="0" cellspacing="0">
+            <tr>
+                <td colspan="100%" data-theme="a" style="text-indent:5px;">
+                    <div style="background: #50BF6A;color:#ffffff;text-shadow:none;">
+                        <div class="left">
+                            <h3>Verizon Wireless<span style="font-size:10px;">  (...67890)</span></h3>
+                        </div>
+                        <div class="right mr15">
+                            <h3>PAID</h3>
+                        </div>
+                        <div class="clr"></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="tal">Amount Paid</td>
+                <td class="tar" style="border-right:1px solid #fff;">$45.13</td>
+            </tr>
+            <tr>
+                <td class="tal">Date Paid</td>
+                <td class="tar" style="border-right:1px solid #fff;">Oct 7, 2013</td>
+            </tr>
+            <tr>
+                <td class="tal" >Confirmation #</td>
+                <td class="tar" style="border-right:1px solid #fff;">Z12345A34567B</td>
+            </tr>
+        </table>
+        <br/><br/>
+        <table data-inset="true" class="billTbl" cellpadding="0" cellspacing="0">
+            <tr>
+                <td colspan="100%" data-theme="a" style="text-indent:5px;">
+                    <div style="background: #50BF6A;color:#ffffff;text-shadow:none;">
+                        <div class="left">
+                            <h3>Comcast Cable<span style="font-size:10px;">  (...01245)</span></h3>
+                        </div>
+                        <div class="right mr15">
+                            <h3>PAID</h3>
+                        </div>
+                        <div class="clr"></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="tal">Amount Paid</td>
+                <td class="tar" style="border-right:1px solid #fff;">$80.12</td>
+            </tr>
+            <tr>
+                <td class="tal">Date Paid</td>
+                <td class="tar" style="border-right:1px solid #fff;">Oct 7, 2013</td>
+            </tr>
+            <tr>
+                <td class="tal" >Confirmation #</td>
+                <td class="tar" style="border-right:1px solid #fff;">Z12345A34567B</td>
+            </tr>
+        </table>
+        <br/><br/>
+        <table data-inset="true" class="billTbl" cellpadding="0" cellspacing="0">
+            <tr>
+                <td colspan="100%" data-theme="a" style="text-indent:5px;">
+                    <div style="background: #50BF6A;color:#ffffff;text-shadow:none;">
+                        <div class="left">
+                            <h3>DoubleNet Pay<span style="font-size:10px;">  (392312)</span></h3>
+                        </div>
+                        <div class="right mr15">
+                            <h3>PAID</h3>
+                        </div>
+                        <div class="clr"></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="tal">Amount Paid</td>
+                <td class="tar" style="border-right:1px solid #fff;">$9.99</td>
+            </tr>
+            <tr>
+                <td class="tal">Date Paid</td>
+                <td class="tar" style="border-right:1px solid #fff;">Oct 7, 2013</td>
+            </tr>
+            <tr>
+                <td class="tal" >Confirmation #</td>
+                <td class="tar" style="border-right:1px solid #fff;">Z12345A34567B</td>
+            </tr>
+        </table>
+        <div class="m15 tac">
+            We have emailed you a confirmation receipt for your records<br>
+            to <b>customer@abc.com</b>
+            <br/>
+            <a href="#home" data-role="button" data-theme="a" data-corners="true">Continue</a>
+        </div>
+    </div>
+    <!-- // content -->
+ </div>
+<!-- // confirmation -->
+
+<!-- pay stubs -->
+<div id="pay_stubs" data-role="page" data-theme="b" data-title="DoubleNetPay Bill Pay">
+    <!-- /panel -->
+    <div id="nav12" class="nav-panel" data-role="panel" data-position-fixed="false" data-display="push" data-theme="c">
+        <a onclick="signout();return false;" data-role="button" data-inline="true" data-theme="a" class="sign-out">Sign Out</a>
+        <ul data-role="listview" data-theme="c" data-divider-theme="d" data-icon="true" class="clear" data-iconpos="left">
+            <li data-icon="fahome" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" onclickFoo="showLoc(null,'Bills');return false;" href="#home">Pending Bills</a></li>
+            <li data-icon="fasearch" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" onclickFoo="showLoc(null,'Bills');return false;" href="#paid_bills">Paid Bill History</a></li>
+            <li data-icon="file-alt" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" onclickFoo="showLoc(null,'Bills');return false;" href="#pay_stubs">Pay Stubs</a></li>
+            <li data-icon="cog" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" onclickFoo="showLoc(null,'Bills');return false;">Settings</a></li>
+            <li data-icon="question-sign" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" onclickFoo="showLoc(null,'Bills');return false;">Help</a></li>
+        </ul>
+    </div>
+    <!-- /panel -->
+    <!-- header -->
+    <div data-role="header" data-position="fixed" data-theme="b">
+        <h1><span class="ui-icon ui-icon-money">&nbsp;</span><span>Pay Stubs</span></h1>
+        <a href="#nav12"  data-iconshadow="false" class="ui-icon-nodisc sprite navmenu-link" data-icon="bars" data-iconpos="notext">Navigation</a>
+        <a class="backBtn" href="#home" data-role="button" data-icon="arrow-l" data-iconpos="notext" data-mini="true" data-inline="true">back</a>
+    </div>
+    <!-- /header -->
+
+    <!-- content -->
+    <div class="m15" data-role="content" data-inset="true" data-shadow="true">
+       <img src="assets/img/paystub.png">
+       <br/><br/>
+       <img src="assets/img/paystub.png">
+       <br/><br/>
+       <img src="assets/img/paystub.png">
+    </div>
+    <!-- // content -->
+</div>
+<!-- // pay stubs -->
+
+
+<!-- paid bills -->
+<div id="paid_bills" data-role="page" data-theme="b" data-title="DoubleNetPay Bill Pay">
+    <!-- /panel -->
+    <div id="nav10" class="nav-panel" data-role="panel" data-position-fixed="false" data-display="push" data-theme="c">
+        <a onclick="signout();return false;" data-role="button" data-inline="true" data-theme="a" class="sign-out">Sign Out</a>
+        <ul data-role="listview" data-theme="c" data-divider-theme="d" data-icon="true" class="clear" data-iconpos="left">
+            <li data-icon="fahome" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" onclickFoo="showLoc(null,'Bills');return false;" href="#home">Pending Bills</a></li>
+            <li data-icon="fasearch" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" onclickFoo="showLoc(null,'Bills');return false;" href="#paid_bills">Paid Bill History</a></li>
+            <li data-icon="file-alt" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" onclickFoo="showLoc(null,'Bills');return false;" href="#pay_stubs">Pay Stubs</a></li>
+            <li data-icon="cog" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" onclickFoo="showLoc(null,'Bills');return false;">Settings</a></li>
+            <li data-icon="question-sign" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" onclickFoo="showLoc(null,'Bills');return false;">Help</a></li>
+        </ul>
+    </div>
+    <!-- /panel -->
+    <!-- header -->
+    <div data-role="header" data-position="fixed" data-theme="b">
+        <h1><span class="ui-icon ui-icon-money">&nbsp;</span><span>Paid Bill History</span></h1>
+        <a href="#nav10"  data-iconshadow="false" class="ui-icon-nodisc sprite navmenu-link" data-icon="bars" data-iconpos="notext">Navigation</a>
+        <a class="backBtn" href="#home" data-role="button" data-icon="arrow-l" data-iconpos="notext" data-mini="true" data-inline="true">back</a>
+    </div>
+    <!-- /header -->
+
+    <div class="m15" data-role="content" data-inset="true" data-shadow="true">
+        <table data-inset="true" class="billTbl" cellpadding="0" cellspacing="0">
+            <tr>
+                <td colspan="100%" data-theme="a" style="text-indent:5px;">
+                    <div style="background: #50BF6A;color:#ffffff;text-shadow:none;">
+                        <div class="left">
+                            <h3>Georgia Power<span style="font-size:10px;">  (...01245)</span></h3>
+                        </div>
+                        <div class="right mr15">
+                            <h3>PAID</h3>
+                        </div>
+                        <div class="clr"></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="tal">Amount Paid</td>
+                <td class="tar" style="border-right:1px solid #fff;">$50.05</td>
+            </tr>
+            <tr>
+                <td class="tal">Date Paid</td>
+                <td class="tar" style="border-right:1px solid #fff;">Oct 7, 2013</td>
+            </tr>
+            <tr>
+                <td class="tal" >Confirmation #</td>
+                <td class="tar" style="border-right:1px solid #fff;">Z12345A34567B</td>
+            </tr>
+        </table>
+        <br/><br/>
+        <table data-inset="true" class="billTbl" cellpadding="0" cellspacing="0">
+            <tr>
+                <td colspan="100%" data-theme="a" style="text-indent:5px;">
+                    <div style="background: #50BF6A;color:#ffffff;text-shadow:none;">
+                        <div class="left">
+                            <h3>Verizon Wireless<span style="font-size:10px;">  (...67890)</span></h3>
+                        </div>
+                        <div class="right mr15">
+                            <h3>PAID</h3>
+                        </div>
+                        <div class="clr"></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="tal">Amount Paid</td>
+                <td class="tar" style="border-right:1px solid #fff;">$45.13</td>
+            </tr>
+            <tr>
+                <td class="tal">Date Paid</td>
+                <td class="tar" style="border-right:1px solid #fff;">Oct 7, 2013</td>
+            </tr>
+            <tr>
+                <td class="tal" >Confirmation #</td>
+                <td class="tar" style="border-right:1px solid #fff;">Z12345A34567B</td>
+            </tr>
+        </table>
+        <br/><br/>
+        <table data-inset="true" class="billTbl" cellpadding="0" cellspacing="0">
+            <tr>
+                <td colspan="100%" data-theme="a" style="text-indent:5px;">
+                    <div style="background: #50BF6A;color:#ffffff;text-shadow:none;">
+                        <div class="left">
+                            <h3>Comcast Cable<span style="font-size:10px;">  (...01245)</span></h3>
+                        </div>
+                        <div class="right mr15">
+                            <h3>PAID</h3>
+                        </div>
+                        <div class="clr"></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="tal">Amount Paid</td>
+                <td class="tar" style="border-right:1px solid #fff;">$80.12</td>
+            </tr>
+            <tr>
+                <td class="tal">Date Paid</td>
+                <td class="tar" style="border-right:1px solid #fff;">Oct 7, 2013</td>
+            </tr>
+            <tr>
+                <td class="tal" >Confirmation #</td>
+                <td class="tar" style="border-right:1px solid #fff;">Z12345A34567B</td>
+            </tr>
+        </table>
+    </div>
+    <!-- // content -->
+</div>
+<!-- // paid bills -->
+
+
+<!-- SETTINGS -->
+<div id="settings" data-role="page">
+    <!-- /panel -->
+    <div id="nav2" class="nav-panel" data-role="panel" data-position-fixed="false" data-display="push" data-theme="c">
+        <a onclick="signout();return false;" data-role="button" data-inline="true" data-theme="a" class="sign-out">Sign Out</a>
+        <ul data-role="listview" data-theme="c" data-divider-theme="d" data-icon="true" class="clear" data-iconpos="left">
+            <li data-icon="fahome" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" onclickFoo="showLoc(null,'Bills');return false;" href="#home">Home</a></li>
+            <li data-icon="file-alt" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" onclickFoo="showLoc(null,'Bills');return false;" href="#bills">Bills</a></li>
+            <li data-icon="fastar" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" href="#offers" onclickFoo="showLoc(null,'employee_performance');return false;">Offers</a></li>
+            <li data-icon="credit-card" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" onclickFoo="showLoc(null,'payment_methods');return false;" href="#credit_guard">Credit Guard</a></li>
+            <li data-icon="map-marker" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" href="#locations">Locations</a></li>
+            <li data-icon="fasearch" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" href="#paid_bills">Paid Bills</a></li>
+            <!--
+            <li data-icon="legal"  class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" hrefFoo="#legal">Legal</a></li>
+            -->
+        </ul>
+    </div>
+    <!-- // panel -->
+    <!-- header -->
+    <div data-role="header" data-position="fixed" data-theme="b">
+        <h1><span class="ui-icon ui-icon-cog">&nbsp;</span><span>Settings</span></h1>
+        <a href="#nav4"  data-iconshadow="false" class="ui-icon-nodisc sprite navmenu-link" data-icon="bars" data-iconpos="notext">Navigation</a>
+    </div>
+    <!-- // header -->
+
+    <!-- content -->
+    <div data-role="content" class="ui-content" data-theme="b">
+        <h3>Settings</h3>
+        <br /><br />
+    </div>
+</div>
+<!-- /SETTINGS -->
+
+
+<!-- HELP -->
+<div id="help" data-role="page">
+
+    <!-- /panel -->
+    <div id="nav5" class="nav-panel" data-role="panel" data-position-fixed="false" data-display="push" data-theme="c">
+        <a onclick="signout();return false;" data-role="button" data-inline="true" data-theme="a" class="sign-out">Sign Out</a>
+        <ul data-role="listview" data-theme="c" data-divider-theme="d" data-icon="true" class="clear" data-iconpos="left">
+            <li data-icon="fahome" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" onclickFoo="showLoc(null,'Bills');return false;" href="#home">Home</a></li>
+            <li data-icon="file-alt" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" onclickFoo="showLoc(null,'Bills');return false;" href="#bills">Bills</a></li>
+            <li data-icon="fastar" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" href="#offers" onclickFoo="showLoc(null,'employee_performance');return false;">Offers</a></li>
+            <li data-icon="credit-card" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" onclickFoo="showLoc(null,'payment_methods');return false;" href="#credit_guard">Credit Guard</a></li>
+            <li data-icon="map-marker" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" href="#locations">Locations</a></li>
+            <li data-icon="fasearch" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" href="#paid_bills">Paid Bills</a></li>
+            <!--
+            <li data-icon="legal"  class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" hrefFoo="#legal">Legal</a></li>
+            -->
+        </ul>
+    </div>
+    <!-- /panel -->
+
+    <!-- header -->
+    <div data-role="header" data-position="fixed" data-theme="b">
+        <h1><span class="ui-icon ui-icon-question-sign">&nbsp;</span><span>Help</span></h1>
+        <a href="#nav5"  data-iconshadow="false" class="ui-icon-nodisc sprite navmenu-link" data-icon="bars" data-iconpos="notext">Navigation</a>
+    </div>
+    <!-- /header -->
+
+    <!-- content -->
+    <div data-role="content" class="ui-content" data-theme="b">
+        <h3>Help</h3>
+        <br /><br />
+    </div>
+    <!-- // content -->
+</div>
+<!-- /HELP -->
+
+
+<!-- locations -->
+<div id="locations" data-role="page" data-theme="b" class="ui-page ui-body-b" style="padding-top:37px;" data-title="Locations">
+
+    <!-- /panel -->
+    <div id="nav6" class="nav-panel" data-role="panel" data-position-fixed="false" data-display="push" data-theme="c">
+        <a onclick="signout();return false;" data-role="button" data-inline="true" data-theme="a" class="sign-out">Sign Out</a>
+        <ul data-role="listview" data-theme="c" data-divider-theme="d" data-icon="true" class="clear" data-iconpos="left">
+            <li data-icon="fahome" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" onclickFoo="showLoc(null,'Bills');return false;" href="#home">Home</a></li>
+            <li data-icon="file-alt" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" onclickFoo="showLoc(null,'Bills');return false;" href="#bills">Bills</a></li>
+            <li data-icon="fastar" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" href="#offers" onclickFoo="showLoc(null,'employee_performance');return false;">Offers</a></li>
+            <li data-icon="credit-card" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" onclickFoo="showLoc(null,'payment_methods');return false;" href="#credit_guard">Credit Guard</a></li>
+            <li data-icon="map-marker" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" href="#locations">Locations</a></li>
+            <li data-icon="fasearch" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" href="#paid_bills">Paid Bills</a></li>
+            <!--
+            <li data-icon="legal"  class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" hrefFoo="#legal">Legal</a></li>
+            -->
+        </ul>
+    </div>
+    <!-- /panel -->
+
+    <!-- header -->
+    <div data-role="header" data-position="fixed" data-theme="b">
+        <h1><span class="ui-icon ui-icon-map-marker">&nbsp;</span><span>Locations</span></h1>
+        <a href="#nav6" data-iconshadow="false" class="ui-icon-nodisc sprite navmenu-link" data-icon="bars" data-iconpos="notext">Navigation</a>
+        <a href="#home" class="backBtn" data-role="button" data-icon="arrow-l" data-iconpos="notext" data-mini="true" data-inline="true">back</a>
+    </div>
+    <!-- /header -->
+
+    <!-- content -->
+    <div data-role="content">
+       <div id="map_wrapper" class="height:100%;position:relative;"></div>
+    </div>
+    <!-- // content -->
+</div>
+<!-- // locations -->
+
+
+<!-- offers -->
+<div id="offers" data-role="page" data-theme="a" data-title="DoubleNetPay Bill Pay - Offers">
+    <!-- /panel -->
+    <div id="nav7" class="nav-panel" data-role="panel" data-position-fixed="false" data-display="push" data-theme="c">
+        <a onclick="signout();return false;" data-role="button" data-inline="true" data-theme="a" class="sign-out">Sign Out</a>
+        <ul data-role="listview" data-theme="c" data-divider-theme="d" data-icon="true" class="clear" data-iconpos="left">
+            <li data-icon="fahome" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" onclickFoo="showLoc(null,'Bills');return false;" href="#home">Home</a></li>
+            <li data-icon="file-alt" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" onclickFoo="showLoc(null,'Bills');return false;" href="#bills">Bills</a></li>
+            <li data-icon="fastar" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" href="#offers" onclickFoo="showLoc(null,'employee_performance');return false;">Offers</a></li>
+            <li data-icon="credit-card" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" onclickFoo="showLoc(null,'payment_methods');return false;" href="#credit_guard">Credit Guard</a></li>
+            <li data-icon="map-marker" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" href="#locations">Locations</a></li>
+            <li data-icon="fasearch" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" href="#paid_bills">Paid Bills</a></li>
+            <!--
+            <li data-icon="legal"  class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" hrefFoo="#legal">Legal</a></li>
+            -->
+        </ul>
+    </div>
+    <!-- /panel -->
+    <!-- header -->
+    <div data-role="header" data-position="fixed" data-theme="b">
+        <h1><span class="ui-icon ui-icon-fastar">&nbsp;</span><span>Offers</span></h1>
+        <a href="#nav7"  data-iconshadow="false" class="ui-icon-nodisc sprite navmenu-link" data-icon="bars" data-iconpos="notext">Navigation</a>
+        <a href="#home" class="backBtn" data-role="button" data-icon="arrow-l" data-iconpos="notext" data-mini="true" data-inline="true">back</a>
+    </div>
+    <!-- /header -->
+
+    <!-- content -->
+    <div data-role="content m0">
+        <img src="assets/img/offers.png">
+    </div>
+    <!-- // content -->
+</div>
+<!-- // offers -->
+
+
+<!-- credit guard -->
+<div id="credit_guard" data-role="page" data-theme="b" data-title="DoubleNetPay Bill Pay">
+    <!-- /panel -->
+    <div id="nav11" class="nav-panel" data-role="panel" data-position-fixed="false" data-display="push" data-theme="c">
+        <a onclick="signout();return false;" data-role="button" data-inline="true" data-theme="a" class="sign-out">Sign Out</a>
+        <ul data-role="listview" data-theme="c" data-divider-theme="d" data-icon="true" class="clear" data-iconpos="left">
+            <li data-icon="fahome" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" onclickFoo="showLoc(null,'Bills');return false;" href="#home">Home</a></li>
+            <li data-icon="file-alt" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" onclickFoo="showLoc(null,'Bills');return false;" href="#bills">Bills</a></li>
+            <li data-icon="fastar" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" href="#offers" onclickFoo="showLoc(null,'employee_performance');return false;">Offers</a></li>
+            <li data-icon="credit-card" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" onclickFoo="showLoc(null,'payment_methods');return false;" href="#credit_guard">Credit Guard</a></li>
+            <li data-icon="map-marker" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" href="#locations">Locations</a></li>
+            <li data-icon="fasearch" class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" href="#paid_bills">Paid Bills</a></li>
+            <!--
+            <li data-icon="legal"  class="ui-icon-nodisc ui-icon-left" data-iconshadow="false"><a data-ajax="false" hrefFoo="#legal">Legal</a></li>
+            -->
+        </ul>
+    </div>
+    <!-- /panel -->
+    <!-- header -->
+    <div data-role="header" data-position="fixed" data-theme="b">
+        <h1><span class="ui-icon ui-icon-money">&nbsp;</span><span>Bills</span></h1>
+        <a href="#nav11"  data-iconshadow="false" class="ui-icon-nodisc sprite navmenu-link" data-icon="bars" data-iconpos="notext">Navigation</a>
+        <a class="backBtn" href="#home" data-role="button" data-icon="arrow-l" data-iconpos="notext" data-mini="true" data-inline="true">back</a>
+    </div>
+    <!-- /header -->
+
+    <div class="greybg pt5" style="background: #50BF6A;color:#FAFAFA;text-shadow:none;padding:5px;">
+        <div class="ml15 left mt5">
+            Increase of 5 points
+        </div>
+        <div class="right mr15 mt5">
+            October, 2nd 2013
+        </div>
+        <div class="clr"></div>
+    </div>
+    <div data-role="content" class="tac">
+        <h2>Your credit score has improved!</h2>
+        <p>
+            current score : 680
+        </p>
+    </div>
+    <!-- // content -->
+</div>
+<!-- // credit guard -->
+
+
+
+
+    <script>
+        $(function(){
+            //console.log("remember : " + $.cookie("rememberEmail"));
+            //console.log("email : " + $.cookie("email"));
+            if($.cookie("rememberEmail") == true &&
+                    $.cookie("email") != "" &&
+                    $.cookie("email") != undefined &&
+                    $.cookie("email") != null){
+                $("#rememberEmail").val("on");
+                $("#email").value($.cookie("email"));
+            }
+            jQuery.extend(jQuery.mobile.datebox.prototype.options, {
+                'overrideDateFormat': '%b %d, %Y',
+                'overrideHeaderFormat': '%b %d, %Y',
+                'FOOoverrideTimeOutput':'%k%M',
+                'overrideTimeOutput':'%I:%M %p'
+            });
+            jQuery( "#signin-help" ).on( "pagebeforeshow", function( event ) {$("#resetPassForm").show();
+                $("#resetPassConfirmation").hide();  });
+            jQuery( "#resetPass" ).on( "pagebeforeshow", function( event ) {
+                if(!api.Session.isActive()){window.location.href = "/";}
+            });
+
+            jQuery( "#locations" ).on( "pageinit", function( event ) {
+                $.cookie('previousView', $.cookie('currentView'), { expires: 365 });
+                $.cookie('currentView', "locations", { expires: 365 });
+            });
+
+            jQuery( "#locations" ).on( "pageshow", function( event ) {
+                map.init();
+                $.cookie('previousView', $.cookie('currentView'), { expires: 365 });
+                $.cookie('currentView', "locations", { expires: 365 });
+            });
+
+            jQuery( "#check_details" ).on( "pageshow", function( event ) {
+                if(myScroll != undefined)
+                  myScroll.destroy();
+                  myScroll = new iScroll('check_items_wrapper', { hScrollbar: false, vScrollbar: false });
+            });
+
+
+            $("#search-checks").click(function(){
+                console.log("searching checks");
+                searchChecks();
+            });
+        });
+    </script>
+</body>
+</html>
+
