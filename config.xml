@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <widget xmlns     = "http://www.w3.org/ns/widgets" xmlns:gap = "http://phonegap.com/ns/1.0"
-        id = "com.bucksbillpay.mobile"
+        id = "com.getfacedeals.camera"
         version   = "2.0.0">
 
-    <name>DoubleNet Pay</name>
+    <name>FaceDeals Camera</name>
 
     <description>
-        Cash Bill Pay
+        Deals at places where your face is!
     </description>
 
     <author href="http://2owls.com" email="2owls@gmail.com">
