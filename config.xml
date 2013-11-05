@@ -29,14 +29,8 @@
     <!-- <icon src="assets/img/device_icons/android/hdpi.png" gap:platform="android" gap:density="hdpi" />  72 pixels -->
     <!-- <icon src="assets/img/device_icons/android/xhdpi.png" gap:platform="android" gap:density="xhdpi" />  96 pixels -->
         
-    <!-- <icon src="assets/img/device_icons/bb/icon.png" gap:platform="blackberry" /> 72 pixels -->
-    <!-- <icon src="assets/img/device_icons/bb/icon_hover.png" gap:platform="blackberry" gap:state="hover"/> 72 pixels -->
-        
     <!-- <icon src="assets/img/device_icons/winphone/icon.png" gap:platform="winphone" /> 57 pixels -->
     <!-- <icon src="assets/img/device_icons/winphone/tileicon.png" gap:platform="winphone" gap:role="background" /> 72 pixels -->
-        
-    <!-- <icon src="assets/img/device_icons/webos/icon.png" gap:platform="webos" /> 29 pixels -->
-    <!-- <icon src="assets/img/device_icons/webos/miniicon.png" gap:platform="webos" gap:role="mini" /> 15 pixels -->
         
     <!-- SPLASH SCREENS -->
         
